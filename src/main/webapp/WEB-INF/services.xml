@@ -20,10 +20,8 @@
   -->
 
 <serviceGroup>
-	<service name="SimpleService">
-		<parameter name="ServiceClass">com.lantian.FindCar.SimpleService</parameter>
-		<operation name="helloService">
-			<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
-		</operation>
-	</service>
+	
+	<service name="LoginService">
+    	<parameter name="ServiceClass">com.lantian.FindCar.service.impl.LoginServiceImpl</parameter>
+	</service>     
 </serviceGroup>
