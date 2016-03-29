@@ -12,14 +12,59 @@
      http://www.springframework.org/schema/context
      http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	
-	<!-- axis2 bean 
-    <bean id="applicationContext"
-        class="org.apache.axis2.extensions.spring.receivers.ApplicationContextHolder" />
-    -->
     
-    <bean id="loginService" class="com.lantian.FindCar.service.impl.LoginServiceImpl">
-    	
+    <!-- 采用注释的方式配置bean  -->
+    <context:annotation-config />    
+    <!-- 配置要扫描的包 -->    
+    <context:component-scan base-package="com.lantian.FindCar"></context:component-scan>  
+  
+    <!-- 加载 jdbc.properties 配置文件 -->  
+    <bean  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="locations">  
+            <list>  
+                <value>/WEB-INF/jdbc.properties</value>  
+            </list>  
+        </property>  
     </bean>
+  
+    <!-- 配置数据源(连接池，proxool) -->  
+    <bean id="dataSource"  
+        class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">  
+        <property name="targetDataSource">  
+            <bean class="org.logicalcobwebs.proxool.ProxoolDataSource">  
+                <property name="driver" value="${jdbc.driverClassName}" />  
+                <property name="driverUrl" value="${jdbc.url}" />  
+                <property name="user" value="${jdbc.username}" />  
+                <property name="password" value="${jdbc.password}" />  
+                <property name="maximumConnectionCount" value="${proxool.maxConnCount}" />  
+                <property name="minimumConnectionCount" value="${proxool.minConnCount}" />  
+                <property name="statistics" value="${proxool.statistics}" />  
+                <property name="simultaneousBuildThrottle" value="${proxool.simultaneousBuildThrottle}" />  
+                <property name="trace" value="${proxool.trace}" />  
+            </bean>  
+        </property>  
+    </bean>
+    
+    <!-- Session工厂 -->  
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+        <!-- mybatis配置文件 -->  
+        <!--  <property name="configLocation" value="/WEB-INF/Mybatis-config.xml" />  -->
+        <property name="mapperLocations" value="classpath:com/lantian/FindCar/mapping/*.xml"/>
+        <property name="typeAliasesPackage" value="com.lantian.FindCar.maper" />
+    </bean>  
+    
+    <!--  
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+  		<property name="mapperInterface" value="com.lantian.FindCar.mapper.UserBaseInformationMapper" />
+  		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
+	</bean>
+	-->
 	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.lantian.FindCar.mapper" />
+    </bean>
+  
+
 </beans>
