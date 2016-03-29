@@ -50,17 +50,10 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
         <!-- mybatis配置文件 -->  
-        <!--  <property name="configLocation" value="/WEB-INF/Mybatis-config.xml" />  -->
-        <property name="mapperLocations" value="classpath:com/lantian/FindCar/mapping/*.xml"/>
+        <property name="configLocation" value="/WEB-INF/Mybatis-config.xml" />
+
         <property name="typeAliasesPackage" value="com.lantian.FindCar.maper" />
     </bean>  
-    
-    <!--  
-    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-  		<property name="mapperInterface" value="com.lantian.FindCar.mapper.UserBaseInformationMapper" />
-  		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
-	</bean>
-	-->
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.lantian.FindCar.mapper" />

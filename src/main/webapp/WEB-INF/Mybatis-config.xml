@@ -5,6 +5,6 @@
       
     <!-- 指定映射文件 -->  
     <mappers>  
-        <mapper resource="com/lantian/FindCar/mapper/xml/UserBaseInformationMapper.xml" />  
+        <mapper resource="com/lantian/FindCar/mapping/UserBaseInformationMapper.xml" />  
     </mappers>  
-</configuration>  
+</configuration>
