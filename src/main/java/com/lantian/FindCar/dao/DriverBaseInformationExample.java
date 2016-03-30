@@ -395,6 +395,76 @@ public class DriverBaseInformationExample {
             return (Criteria) this;
         }
 
+        public Criteria andCarCateIsNull() {
+            addCriterion("car_cate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateIsNotNull() {
+            addCriterion("car_cate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateEqualTo(String value) {
+            addCriterion("car_cate =", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateNotEqualTo(String value) {
+            addCriterion("car_cate <>", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateGreaterThan(String value) {
+            addCriterion("car_cate >", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateGreaterThanOrEqualTo(String value) {
+            addCriterion("car_cate >=", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateLessThan(String value) {
+            addCriterion("car_cate <", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateLessThanOrEqualTo(String value) {
+            addCriterion("car_cate <=", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateLike(String value) {
+            addCriterion("car_cate like", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateNotLike(String value) {
+            addCriterion("car_cate not like", value, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateIn(List<String> values) {
+            addCriterion("car_cate in", values, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateNotIn(List<String> values) {
+            addCriterion("car_cate not in", values, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateBetween(String value1, String value2) {
+            addCriterion("car_cate between", value1, value2, "carCate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCarCateNotBetween(String value1, String value2) {
+            addCriterion("car_cate not between", value1, value2, "carCate");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;
