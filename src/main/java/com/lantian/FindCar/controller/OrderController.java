@@ -1,6 +1,7 @@
 package com.lantian.FindCar.controller;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.annotation.AccessRequired;
 import com.lantian.FindCar.text.ResultText;
 
+@Controller
 public class OrderController {
 	
 	private static Logger log = Logger.getLogger(OrderController.class);
