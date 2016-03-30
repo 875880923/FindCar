@@ -2,5 +2,8 @@ package com.lantian.FindCar.service;
 
 public interface UserService {
 	
-	public String login(String username,String password);
+	public boolean updateLoginStatus(String phonenum);
+	
+	public String getAccessToken(String phoneNum);
+	
 }

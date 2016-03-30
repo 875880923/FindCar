@@ -88,7 +88,7 @@ public class UserBaseInformation {
      * @mbggenerated
      */
     public void setPhonenum(String phonenum) {
-        this.phonenum = phonenum == null ? null : phonenum.trim();
+        this.phonenum = phonenum;
     }
 
     /**
@@ -112,7 +112,7 @@ public class UserBaseInformation {
      * @mbggenerated
      */
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     /**
@@ -160,6 +160,6 @@ public class UserBaseInformation {
      * @mbggenerated
      */
     public void setCreatedLocation(String createdLocation) {
-        this.createdLocation = createdLocation == null ? null : createdLocation.trim();
+        this.createdLocation = createdLocation;
     }
 }
