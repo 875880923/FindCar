@@ -18,8 +18,8 @@ public class AroundDriverController {
 	
 	private static Logger log = Logger.getLogger(AroundDriverController.class);
 	
-	private static double lat_span = 0.0001;
-	private static double lng_span = 0.0001;
+	private static double lat_span = 0.05;
+	private static double lng_span = 0.05;
 	
 	@RequestMapping(value="/aroundDriver")
 	@ResponseBody
@@ -28,7 +28,7 @@ public class AroundDriverController {
 		JSONObject jsonObj = new JSONObject();
 		Random rand = new Random(System.currentTimeMillis());
 		List<JSONObject> list = new ArrayList<JSONObject>();
-		int locationSize = (rand.nextInt()%100)+150;
+		int locationSize = (rand.nextInt()%30)+50;
 		for(int i=0;i<locationSize;i++){
 			double newLat = lat + lat_span*(rand.nextDouble()-0.5);
 			double newLng = lng + lng_span*(rand.nextDouble()-0.5);
