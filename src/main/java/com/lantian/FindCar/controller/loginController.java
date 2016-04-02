@@ -64,7 +64,4 @@ public class loginController {
 		return jsonObject.toString();
 	}
 	
-	
-	
-	
 }

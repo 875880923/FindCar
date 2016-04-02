@@ -30,7 +30,7 @@ public class OrderController {
 		JSONObject jsonObject = new JSONObject();
 		
 		
-		log.info("用户创建订单 : phonenum:"+phonenum+" car_cate:"+carCate+
+		log.info("用户创建订单: phonenum:"+phonenum+" car_cate:"+carCate+
 				" start_location_name:"+startLocationName+" start_location_lat:"+startLocationLat+
 				" start_location_lng:"+startLocationLng+" end_location_name:"+endLocationName+
 				" end_location_lat:"+endLocationLat+" end_location_lng:"+endLocationLng

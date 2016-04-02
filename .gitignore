@@ -3,3 +3,4 @@
 .project
 .classpath
 src/main/webapp/WEB-INF/classes/jdbc.properties
+src/main/webapp/WEB-INF/log4j.properties

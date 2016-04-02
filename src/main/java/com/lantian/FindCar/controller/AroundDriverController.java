@@ -28,7 +28,7 @@ public class AroundDriverController {
 		JSONObject jsonObj = new JSONObject();
 		Random rand = new Random(System.currentTimeMillis());
 		List<JSONObject> list = new ArrayList<JSONObject>();
-		int locationSize = (rand.nextInt()%30)+50;
+		int locationSize = (rand.nextInt()%10)+15;
 		for(int i=0;i<locationSize;i++){
 			double newLat = lat + lat_span*(rand.nextDouble()-0.5);
 			double newLng = lng + lng_span*(rand.nextDouble()-0.5);

@@ -7,4 +7,6 @@ public class ResultText {
 	public static String fail = "fail";
 	
 	public static String error = "error";
+	
+	public static String no_login = "no_login";
 }
