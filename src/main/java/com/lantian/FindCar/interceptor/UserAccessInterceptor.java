@@ -25,6 +25,7 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
 	
 	public boolean preHandle(HttpServletRequest request,
             HttpServletResponse response, Object handler) throws Exception {
+		try{
 		JSONObject requestJson = new JSONObject(request.getParameterMap());
 		log.info("request: "+requestJson.toString());
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -38,6 +39,7 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
         	   long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
         	   if(userAnimateId!=-1){
         		   if(userService.verifyUserAccessLegal(userAnimateId, access_token)){
+        			   log.info("验证通过！");
         			   return true;
         		   }else{
         			   jsonObject.put("result", ResultText.access_login_fail);
@@ -52,6 +54,10 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
            response.getWriter().write(jsonObject.toString());
     	   return false;
         }
+		}catch(Exception e){
+			log.error("拦截器异常："+e.getLocalizedMessage());
+			return false;
+		}
         return true;
     }
 }
