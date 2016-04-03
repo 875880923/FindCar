@@ -4,6 +4,8 @@ package com.lantian.FindCar.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import javax.security.auth.login.CredentialException;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import com.lantian.FindCar.dao.UserAnimateInformation;
 import com.lantian.FindCar.dao.UserAnimateInformationExample;
 import com.lantian.FindCar.dao.UserBaseInformation;
 import com.lantian.FindCar.dao.UserBaseInformationExample;
+import com.lantian.FindCar.dao.UserAnimateInformationExample.Criteria;
 import com.lantian.FindCar.mapper.UserAnimateInformationMapper;
 import com.lantian.FindCar.mapper.UserBaseInformationMapper;
 import com.lantian.FindCar.service.UserService;
@@ -63,7 +66,7 @@ public class UserServiceImpl implements UserService {
 				UserBaseInformation base = new UserBaseInformation();
 				base.setPhonenum(phonenum);
 				base.setCreatedTime(new Date());
-				userBaseMapper.insert(base);
+				userBaseMapper.insertSelective(base);
 				baseList = userBaseMapper.selectByExample(baseExample);
 			}
 			long base_id = baseList.get(0).getId();
@@ -77,12 +80,44 @@ public class UserServiceImpl implements UserService {
 				UserAnimateInformation animate = new UserAnimateInformation();
 				animate.setPhonenum(phonenum);
 				animate.setUserBaseId(base_id);
-				userAnimateMapper.insert(animate);
+				userAnimateMapper.insertSelective(animate);
 			}
 		}catch(Exception e){
 			log.error("登陆状态修改失败："+e.getLocalizedMessage());
 			isUpdateSuccess = false;
 		}
 		return isUpdateSuccess;
+	}
+
+	public long getUserAnimateIdByPhonenum(String phonenum) {
+		long userAnimateId = -1;
+		try{
+			UserAnimateInformationExample example = new UserAnimateInformationExample();
+			UserAnimateInformationExample.Criteria criteria = example.createCriteria();
+			criteria.andPhonenumEqualTo(phonenum);
+			List<UserAnimateInformation> list = userAnimateMapper.selectByExample(example);
+			if(!CommonUtil.isEmpty(list)){
+				UserAnimateInformation entity = list.get(0);
+				userAnimateId = entity.getId();
+			}
+		}catch(Exception e){
+			log.error("获取用户animateId失败:"+e.getLocalizedMessage());
+		}
+		return userAnimateId;
+	}
+
+	public boolean verifyUserAccessLegal(long userAnimateId, String access_token) {
+		boolean isLegal = false;
+		try{
+			UserAnimateInformation entity = userAnimateMapper.selectByPrimaryKey(userAnimateId);
+			if(null!=entity){
+				if(access_token.equals(entity.getAccessToken())){
+					isLegal = true;
+				}
+			}
+		}catch(Exception e){
+			log.error("验证用户accessLegal失败："+e.getLocalizedMessage());
+		}
+		return isLegal;
 	}
 }

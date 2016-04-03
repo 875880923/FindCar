@@ -27,15 +27,15 @@ public class ConfirmCodeServiceImpl implements ConfirmCodeService{
 	
 	public boolean sendConfirmCode(String phonenum){
 		try{
-		String confirmCodeStr = ConfirmCodeUtil.getConfirmCode();
-		ConfirmCode code = new ConfirmCode();
-		code.setCreateTime(new Date());
-		code.setPhonenum(phonenum);
-		code.setConfirmcode(confirmCodeStr);
-		codeMapper.insert(code);
-		//调用服务发送验证码到用户手机
-		
-		log.info("已发送验证码：phonenum:"+phonenum+" confirmCode:"+confirmCodeStr);
+			String confirmCodeStr = ConfirmCodeUtil.getConfirmCode();
+			ConfirmCode code = new ConfirmCode();
+			code.setCreateTime(new Date());
+			code.setPhonenum(phonenum);
+			code.setConfirmcode(confirmCodeStr);
+			codeMapper.insertSelective(code);
+			//调用服务发送验证码到用户手机
+			
+			log.info("已发送验证码：phonenum:"+phonenum+" confirmCode:"+confirmCodeStr);
 		}catch(Exception e){
 			log.error("发送验证码失败！"+e.getLocalizedMessage());
 			return false;
@@ -51,14 +51,12 @@ public class ConfirmCodeServiceImpl implements ConfirmCodeService{
 			criteria.andPhonenumEqualTo(phonenum);
 			criteria.andConfirmcodeEqualTo(confirmCode);
 			Date time = new Date(new Date().getTime()-cofirmcode_dead_time*60000);
+			criteria.andCreateTimeGreaterThan(time);
 			List<ConfirmCode> list = codeMapper.selectByExample(example);
 			if(!CommonUtil.isEmpty(list)){
-				ConfirmCode code = list.get(0);
-				if(code.getCreateTime().getTime()>=time.getTime()){
 					isLegal=true;
-				}else{
-					log.info("验证码超时！phonenum："+phonenum+" confirmCode:"+confirmCode);
-				}
+			}else{
+				log.info("验证码超时！phonenum："+phonenum+" confirmCode:"+confirmCode);
 			}
 		}catch(Exception e){
 			log.error("确认验证码出错"+e.getLocalizedMessage());
