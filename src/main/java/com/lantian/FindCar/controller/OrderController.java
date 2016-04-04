@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.annotation.AccessRequired;
 import com.lantian.FindCar.service.OrderService;
 import com.lantian.FindCar.service.UserService;
+import com.lantian.FindCar.text.OrderText;
 import com.lantian.FindCar.text.ResultText;
 import com.lantian.FindCar.util.CommonUtil;
 
@@ -73,10 +74,10 @@ public class OrderController {
 		return jsonObject.toString();
 	}
 	
-	@RequestMapping(value="/getOrderStatus")
+	@RequestMapping(value="/getOrderDriver")
 	@ResponseBody
 	@AccessRequired
-	public String getOrderStatus(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
+	public String getOrderDriver(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
 		JSONObject jsonObject = new JSONObject();
 		long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
 		if(userAnimateId==-1){
@@ -85,12 +86,18 @@ public class OrderController {
 			return jsonObject.toString();
 		}
 		String orderStatus = orderService.getOrderStatusByOrderId(orderId,userAnimateId);
+		
 		if(!CommonUtil.isEmpty(orderStatus)){
-			jsonObject.put("order_status", orderStatus);
+			long driver_animate_id = -1;
+			if(OrderText.driver_accept.equals(orderStatus)){
+				driver_animate_id= orderService.getOrderDriverIdByOrderId(orderId, userAnimateId);
+			}
+			jsonObject.put("driver_animate_id", driver_animate_id);
 			jsonObject.put("result", ResultText.success);
 		}else{
 			jsonObject.put("result", ResultText.fail);
 		}
+		log.info("查询订单司机ID：phonenum:"+phonenum+" order_id:"+orderId+"  data:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 	
@@ -105,13 +112,13 @@ public class OrderController {
 			jsonObject.put("result", ResultText.no_user);
 			return jsonObject.toString();
 		}
-		String orderStatus = orderService.getOrderStatusByOrderId(orderId,userAnimateId);
-		if(!CommonUtil.isEmpty(orderStatus)){
-			jsonObject.put("order_status", orderStatus);
+		boolean is_success = orderService.cancelOrderByOrderId(orderId,userAnimateId);
+		if(is_success){
 			jsonObject.put("result", ResultText.success);
 		}else{
 			jsonObject.put("result", ResultText.fail);
 		}
+		log.info("取消订单：phonenum:"+phonenum+" order_id:"+orderId+" data:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 }

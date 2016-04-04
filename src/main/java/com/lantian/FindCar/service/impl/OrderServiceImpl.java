@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 		try{
 			OrderRecord record =orderMapper.selectByPrimaryKey(orderId);
 			if(null != record){
-				if(record.getUserAnimateId() == orderId){
+				if(record.getUserAnimateId() == userAnimateId){
 					orderStatus = record.getOrderStatus();
 				}
 			}
@@ -96,5 +96,22 @@ public class OrderServiceImpl implements OrderService {
 			log.error("取消订单失败："+e.getLocalizedMessage());
 		}
 		return result;
+	}
+
+
+	public long getOrderDriverIdByOrderId(long orderId, long userAnimateId) {
+		long driver_animate_id = -1;
+		try{
+			OrderRecord record =orderMapper.selectByPrimaryKey(orderId);
+			if(null != record){
+				if(record.getUserAnimateId() == userAnimateId){
+					driver_animate_id = record.getDriverAnimateId();
+				}
+			}
+			
+		}catch(Exception e){
+			log.error("获取订单司机失败："+e.getLocalizedMessage());
+		}
+		return driver_animate_id;
 	}
 }

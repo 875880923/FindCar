@@ -12,4 +12,6 @@ public interface OrderService {
 	public String getOrderStatusByOrderId(long orderId,long userAnimateId);
 	
 	public boolean cancelOrderByOrderId(long orderId,long userAnimateId);
+	
+	public long getOrderDriverIdByOrderId(long orderId,long userAnimateId);
 }

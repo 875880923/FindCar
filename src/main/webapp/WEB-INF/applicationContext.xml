@@ -37,7 +37,10 @@
                 <property name="minimumConnectionCount" value="${proxool.minConnCount}" />  
                 <property name="statistics" value="${proxool.statistics}" />  
                 <property name="simultaneousBuildThrottle" value="${proxool.simultaneousBuildThrottle}" />  
-                <property name="trace" value="${proxool.trace}" />  
+                <property name="trace" value="${proxool.trace}" /> 
+                <property name="testBeforeUse" value="true" /> 
+                <property name="houseKeepingTestSql" value="SELECT CURRENT_DATE" />
+                
             </bean>  
         </property>  
     </bean>
