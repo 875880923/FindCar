@@ -1,5 +1,6 @@
 package com.lantian.FindCar.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.dao.OrderRecord;
 import com.lantian.FindCar.dao.OrderRecordExample;
 import com.lantian.FindCar.mapper.OrderRecordMapper;
@@ -113,5 +115,53 @@ public class OrderServiceImpl implements OrderService {
 			log.error("获取订单司机失败："+e.getLocalizedMessage());
 		}
 		return driver_animate_id;
+	}
+
+
+	public boolean completeOrderByOrderId(long orderId, long userAnimateId) {
+		boolean result = false;
+		try{
+			OrderRecord record = orderMapper.selectByPrimaryKey(orderId);
+			if(record!=null){
+				if(record.getUserAnimateId() == userAnimateId){
+					record.setOrderStatus(OrderText.order_complete);
+					orderMapper.updateByPrimaryKey(record);
+					result = true;
+				}
+			}
+		}catch(Exception e){
+			log.error("完成订单失败："+e.getLocalizedMessage());
+		}
+		return result;
+	}
+
+
+	public List<String> getUserOrderList(long userAnimateId, long start, long limit) {
+		List<String> list = new ArrayList<String>();
+		try{
+			OrderRecordExample example = new OrderRecordExample();
+			OrderRecordExample.Criteria criteria = example.createCriteria();
+			criteria.andUserAnimateIdEqualTo(userAnimateId);
+			example.setOrderByClause("create_time desc");
+			example.setStart(start);
+			example.setLimit(limit);
+			List<OrderRecord> orderList = orderMapper.selectByExample(example);
+			if(!CommonUtil.isEmpty(orderList)){
+				for(OrderRecord order : orderList){
+					JSONObject orderJson = new JSONObject();
+					orderJson.put("order_id", order.getId());
+					orderJson.put("driver_animate_id", order.getDriverAnimateId());
+					orderJson.put("order_status", order.getOrderStatus());
+					orderJson.put("start_name", order.getStartLocationName());
+					orderJson.put("end_name", order.getEndLocationName());
+					orderJson.put("car_cate", order.getCarCate());
+					orderJson.put("create_time", order.getCreateTime());
+					list.add(orderJson.toString());
+				}
+			}
+		}catch(Exception e){
+			log.error("获取用户订单列表失败："+e.getLocalizedMessage());
+		}
+		return list;
 	}
 }

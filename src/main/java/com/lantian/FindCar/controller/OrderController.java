@@ -1,6 +1,7 @@
 package com.lantian.FindCar.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +68,18 @@ public class OrderController {
 	@RequestMapping(value="/getOrder")
 	@ResponseBody
 	@AccessRequired
-	public String getOrder(@RequestParam("phonenum")String phonenum){
+	public String getOrder(@RequestParam("phonenum")String phonenum
+			,@RequestParam("start")long start
+			,@RequestParam("limit")long limit){
 		JSONObject jsonObject = new JSONObject();
-		
+		long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
+		if(userAnimateId==-1){
+			//用户不存在
+			jsonObject.put("result", ResultText.no_user);
+			return jsonObject.toString();
+		}
+		List<String> orderList = orderService.getUserOrderList(userAnimateId, start, limit);
+		jsonObject.put("order_list", orderList);
 		jsonObject.put("result", ResultText.success);
 		return jsonObject.toString();
 	}
@@ -121,4 +131,26 @@ public class OrderController {
 		log.info("取消订单：phonenum:"+phonenum+" order_id:"+orderId+" data:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
+	
+	@RequestMapping(value="/completeOrder")
+	@ResponseBody
+	@AccessRequired
+	public String completeOrder(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
+		JSONObject jsonObject = new JSONObject();
+		long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
+		if(userAnimateId==-1){
+			//用户不存在
+			jsonObject.put("result", ResultText.no_user);
+			return jsonObject.toString();
+		}
+		boolean is_success = orderService.completeOrderByOrderId(orderId,userAnimateId);
+		if(is_success){
+			jsonObject.put("result", ResultText.success);
+		}else{
+			jsonObject.put("result", ResultText.fail);
+		}
+		log.info("取消订单：phonenum:"+phonenum+" order_id:"+orderId+" data:"+jsonObject.toString());
+		return jsonObject.toString();
+	}
+	
 }

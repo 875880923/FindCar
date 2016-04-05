@@ -7,4 +7,6 @@ public class OrderText {
 	public static String user_canceled = "用户取消订单";
 	
 	public static String driver_accept = "司机已接单";
+	
+	public static String order_complete = "订单完成";
 }

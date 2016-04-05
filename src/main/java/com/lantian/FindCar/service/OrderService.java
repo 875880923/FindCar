@@ -1,6 +1,7 @@
 package com.lantian.FindCar.service;
 
 import java.util.Date;
+import java.util.List;
 
 public interface OrderService {
 
@@ -14,4 +15,8 @@ public interface OrderService {
 	public boolean cancelOrderByOrderId(long orderId,long userAnimateId);
 	
 	public long getOrderDriverIdByOrderId(long orderId,long userAnimateId);
+	
+	public boolean completeOrderByOrderId(long orderId,long userAnimateId);
+	
+	public List<String> getUserOrderList(long userAnimateId,long start,long limit);
 }
