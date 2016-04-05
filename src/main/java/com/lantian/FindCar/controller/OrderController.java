@@ -149,7 +149,7 @@ public class OrderController {
 		}else{
 			jsonObject.put("result", ResultText.fail);
 		}
-		log.info("取消订单：phonenum:"+phonenum+" order_id:"+orderId+" data:"+jsonObject.toString());
+		log.info("完成订单：phonenum:"+phonenum+" order_id:"+orderId+" data:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 	

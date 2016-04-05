@@ -39,7 +39,6 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
         	   long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
         	   if(userAnimateId!=-1){
         		   if(userService.verifyUserAccessLegal(userAnimateId, access_token)){
-        			   log.info("验证通过！");
         			   return true;
         		   }else{
         			   jsonObject.put("result", ResultText.access_login_fail);
