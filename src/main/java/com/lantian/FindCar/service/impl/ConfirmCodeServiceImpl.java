@@ -37,7 +37,7 @@ public class ConfirmCodeServiceImpl implements ConfirmCodeService{
 			
 			log.info("已发送验证码：phonenum:"+phonenum+" confirmCode:"+confirmCodeStr);
 		}catch(Exception e){
-			log.error("发送验证码失败！"+e.getLocalizedMessage());
+			log.error("发送验证码失败！",e);
 			return false;
 		}
 		return true;
@@ -59,7 +59,7 @@ public class ConfirmCodeServiceImpl implements ConfirmCodeService{
 				log.info("验证码超时！phonenum："+phonenum+" confirmCode:"+confirmCode);
 			}
 		}catch(Exception e){
-			log.error("确认验证码出错"+e.getLocalizedMessage());
+			log.error("确认验证码出错",e);
 		}
 		return isLegal;
 	}

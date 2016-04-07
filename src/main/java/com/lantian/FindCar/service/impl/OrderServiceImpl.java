@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 			orderMapper.insertSelective(orderRecord);
 			orderId = getOrderIdByUserAnimateidAndTime(userAnimateId, time);
 		}catch(Exception e){
-			log.error("创建订单失败："+e.getLocalizedMessage());
+			log.error("创建订单失败：",e);
 		}
 		return orderId;
 	}
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 				orderId = entity.getId();
 			}
 		}catch(Exception e){
-			log.error("获取订单id失败："+e.getLocalizedMessage());
+			log.error("获取订单id失败：",e);
 		}
 		return orderId;
 	}
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}catch(Exception e){
-			log.error("获取订单状态失败："+e.getLocalizedMessage());
+			log.error("获取订单状态失败：",e);
 		}
 		return orderStatus;
 	}
@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}catch(Exception e){
-			log.error("取消订单失败："+e.getLocalizedMessage());
+			log.error("取消订单失败：",e);
 		}
 		return result;
 	}
@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 			
 		}catch(Exception e){
-			log.error("获取订单司机失败："+e.getLocalizedMessage());
+			log.error("获取订单司机失败：",e);
 		}
 		return driver_animate_id;
 	}
@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}catch(Exception e){
-			log.error("完成订单失败："+e.getLocalizedMessage());
+			log.error("完成订单失败：",e);
 		}
 		return result;
 	}
@@ -160,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 			}
 		}catch(Exception e){
-			log.error("获取用户订单列表失败："+e.getLocalizedMessage());
+			log.error("获取用户订单列表失败：",e);
 		}
 		return list;
 	}

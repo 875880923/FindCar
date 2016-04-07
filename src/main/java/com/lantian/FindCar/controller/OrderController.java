@@ -81,6 +81,7 @@ public class OrderController {
 		List<String> orderList = orderService.getUserOrderList(userAnimateId, start, limit);
 		jsonObject.put("order_list", orderList);
 		jsonObject.put("result", ResultText.success);
+		log.info("获取订单列表：phonenum:"+phonenum+" result:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 	

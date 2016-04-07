@@ -54,7 +54,7 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
     	   return false;
         }
 		}catch(Exception e){
-			log.error("拦截器异常："+e.getLocalizedMessage());
+			log.error("拦截器异常：",e);
 			return false;
 		}
         return true;

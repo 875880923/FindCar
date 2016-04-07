@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 				return accessToken;
 			}
 		}catch(Exception e){
-			log.error("获取access_token错误："+e.getLocalizedMessage());
+			log.error("获取access_token错误：",e);
 		}
 		return null;
 	}
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 				userAnimateMapper.insertSelective(animate);
 			}
 		}catch(Exception e){
-			log.error("登陆状态修改失败："+e.getLocalizedMessage());
+			log.error("登陆状态修改失败：",e);
 			isUpdateSuccess = false;
 		}
 		return isUpdateSuccess;
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 				userAnimateId = entity.getId();
 			}
 		}catch(Exception e){
-			log.error("获取用户animateId失败:"+e.getLocalizedMessage());
+			log.error("获取用户animateId失败:",e);
 		}
 		return userAnimateId;
 	}
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}catch(Exception e){
-			log.error("验证用户accessLegal失败："+e.getLocalizedMessage());
+			log.error("验证用户accessLegal失败：",e);
 		}
 		return isLegal;
 	}
