@@ -4,8 +4,6 @@ package com.lantian.FindCar.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.security.auth.login.CredentialException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,6 @@ import com.lantian.FindCar.dao.UserAnimateInformation;
 import com.lantian.FindCar.dao.UserAnimateInformationExample;
 import com.lantian.FindCar.dao.UserBaseInformation;
 import com.lantian.FindCar.dao.UserBaseInformationExample;
-import com.lantian.FindCar.dao.UserAnimateInformationExample.Criteria;
 import com.lantian.FindCar.mapper.UserAnimateInformationMapper;
 import com.lantian.FindCar.mapper.UserBaseInformationMapper;
 import com.lantian.FindCar.service.UserService;

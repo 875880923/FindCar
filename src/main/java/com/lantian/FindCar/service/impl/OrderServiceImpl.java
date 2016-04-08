@@ -142,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
 			OrderRecordExample example = new OrderRecordExample();
 			OrderRecordExample.Criteria criteria = example.createCriteria();
 			criteria.andUserAnimateIdEqualTo(userAnimateId);
-			example.setOrderByClause("create_time desc");
+			example.setOrderByClause("create_time");
 			example.setStart(start);
 			example.setLimit(limit);
 			List<OrderRecord> orderList = orderMapper.selectByExample(example);

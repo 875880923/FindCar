@@ -65,7 +65,7 @@ public class OrderController {
 		return jsonObject.toString();
 	}
 	
-	@RequestMapping(value="/getOrder")
+	@RequestMapping(value="/getOrder",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	@AccessRequired
 	public String getOrder(@RequestParam("phonenum")String phonenum
