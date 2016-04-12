@@ -13,4 +13,6 @@ public class ResultText {
 	public static String access_login_fail = "access_login_fail";
 	
 	public static String no_user = "no_user";
+	
+	public static String no_driver = "no_driver";
 }

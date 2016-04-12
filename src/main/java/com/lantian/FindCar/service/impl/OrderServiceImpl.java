@@ -164,4 +164,37 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return list;
 	}
+
+
+	public boolean agreeOrderByOrderId(long orderId, long driverAnimateId) {
+		return false;
+	}
+
+
+	public List<String> getAvailableOrder() {
+		List<String> list = new ArrayList<String>();
+		try{
+			OrderRecordExample example = new OrderRecordExample();
+			OrderRecordExample.Criteria criteria = example.createCriteria();
+			criteria.andOrderStatusEqualTo(OrderText.user_created);
+			example.setOrderByClause("create_time");
+			List<OrderRecord> orderList = orderMapper.selectByExample(example);
+			if(!CommonUtil.isEmpty(orderList)){
+				for(OrderRecord order : orderList){
+					JSONObject orderJson = new JSONObject();
+					orderJson.put("order_id", order.getId());
+					orderJson.put("driver_animate_id", order.getDriverAnimateId());
+					orderJson.put("order_status", order.getOrderStatus());
+					orderJson.put("start_name", order.getStartLocationName());
+					orderJson.put("end_name", order.getEndLocationName());
+					orderJson.put("car_cate", order.getCarCate());
+					orderJson.put("create_time", order.getCreateTime());
+					list.add(orderJson.toString());
+				}
+			}
+		}catch(Exception e){
+			log.error("获取未接单订单列表失败：",e);
+		}
+		return list;
+	}
 }

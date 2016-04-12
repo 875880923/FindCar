@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}catch(Exception e){
-			log.error("验证用户accessLegal失败：",e);
+			log.error("验证用户access Legal失败：",e);
 		}
 		return isLegal;
 	}

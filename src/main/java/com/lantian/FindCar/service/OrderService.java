@@ -19,4 +19,8 @@ public interface OrderService {
 	public boolean completeOrderByOrderId(long orderId,long userAnimateId);
 	
 	public List<String> getUserOrderList(long userAnimateId,long start,long limit);
+	
+	public boolean agreeOrderByOrderId(long orderId,long driverAnimateId);
+	
+	public List<String> getAvailableOrder();
 }
