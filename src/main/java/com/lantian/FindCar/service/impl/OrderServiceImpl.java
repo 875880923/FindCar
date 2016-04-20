@@ -167,7 +167,21 @@ public class OrderServiceImpl implements OrderService {
 
 
 	public boolean agreeOrderByOrderId(long orderId, long driverAnimateId) {
-		return false;
+		boolean result = false;
+		try{
+			OrderRecord record = orderMapper.selectByPrimaryKey(orderId);
+			if(record!=null){
+				if(record.getDriverAnimateId() == 0){
+					record.setOrderStatus(OrderText.driver_accept);
+					record.setDriverAnimateId(driverAnimateId);
+					orderMapper.updateByPrimaryKey(record);
+					result = true;
+				}
+			}
+		}catch(Exception e){
+			log.error("完成订单失败：",e);
+		}
+		return result;
 	}
 
 
