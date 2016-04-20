@@ -211,4 +211,22 @@ public class OrderServiceImpl implements OrderService {
 		}
 		return list;
 	}
+
+
+	public long getOrderUserIdByOrderId(long orderId, long driverAnimateId) {
+		long user_animate_id = -1;
+		try{
+			OrderRecord record =orderMapper.selectByPrimaryKey(orderId);
+			if(null != record){
+				if(record.getUserAnimateId() !=null && record.getUserAnimateId()== driverAnimateId){
+					user_animate_id = record.getUserAnimateId();
+				}
+			}
+			
+		}catch(Exception e){
+			log.error("获取订单司机失败：",e);
+		}
+		return user_animate_id;
+	}
+
 }

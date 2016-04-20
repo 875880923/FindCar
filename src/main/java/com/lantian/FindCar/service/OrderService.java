@@ -20,7 +20,12 @@ public interface OrderService {
 	
 	public List<String> getUserOrderList(long userAnimateId,long start,long limit);
 	
+	
+	
+	//司机端接口
 	public boolean agreeOrderByOrderId(long orderId,long driverAnimateId);
 	
 	public List<String> getAvailableOrder();
+	
+	public long getOrderUserIdByOrderId(long orderId,long driverAnimateId);
 }

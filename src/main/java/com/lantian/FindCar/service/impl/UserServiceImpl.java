@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.dao.UserAnimateInformation;
 import com.lantian.FindCar.dao.UserAnimateInformationExample;
 import com.lantian.FindCar.dao.UserBaseInformation;
@@ -116,5 +117,20 @@ public class UserServiceImpl implements UserService {
 			log.error("验证用户access Legal失败：",e);
 		}
 		return isLegal;
+	}
+
+	public String getUserInfo(long userAnimateId) {
+		JSONObject userInfoJson = new JSONObject();
+		try{
+			UserAnimateInformation entity = userAnimateMapper.selectByPrimaryKey(userAnimateId);
+			if(entity!=null){
+				UserBaseInformation baseEntity = userBaseMapper.selectByPrimaryKey(entity.getUserBaseId());
+				userInfoJson.put("user_phonenum", baseEntity.getPhonenum());
+				userInfoJson.put("user_name", baseEntity.getName());
+			}
+		}catch(Exception e){
+			log.error("获取用户信息失败:",e);
+		}
+		return userInfoJson.toString();
 	}
 }

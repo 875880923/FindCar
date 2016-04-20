@@ -8,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.JspAwareRequestContext;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.annotation.DriverAccessRequired;
 import com.lantian.FindCar.service.DriverService;
 import com.lantian.FindCar.service.OrderService;
+import com.lantian.FindCar.service.UserService;
 import com.lantian.FindCar.text.ResultText;
+import com.lantian.FindCar.util.CommonUtil;
 
 @Controller
 public class DriverOrderController {
@@ -24,6 +27,8 @@ public class DriverOrderController {
 	private DriverService driverService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="/driver/agreeOrder")
 	@ResponseBody
@@ -65,6 +70,32 @@ public class DriverOrderController {
 			jsonObject.put("result", ResultText.fail);
 		}
 		log.info("司机查询未接单订单：phonenum:"+phonenum+" data:"+jsonObject.toString());
+		return jsonObject.toString();
+	}
+	
+	@RequestMapping(value="/driver/getUserInfo")
+	@ResponseBody
+	@DriverAccessRequired
+	public String getUserInfo(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
+		JSONObject jsonObject = new JSONObject();
+		long driverAnimateId = driverService.getDriverAnimateIdByPhonenum(phonenum);
+		if(driverAnimateId==-1){
+			//用户不存在
+			jsonObject.put("result", ResultText.no_driver);
+			return jsonObject.toString();
+		}
+		long userAnimateId = orderService.getOrderUserIdByOrderId(orderId, driverAnimateId);
+		if(userAnimateId==-1){
+			jsonObject.put("result", ResultText.fail);
+			return jsonObject.toString();
+		}
+		String userInfo = userService.getUserInfo(userAnimateId);
+		if(CommonUtil.isNotEmpty(userInfo)){
+			jsonObject.put("result", ResultText.success);
+			jsonObject.put("user_info", userInfo);
+		}else{
+			jsonObject.put("result", ResultText.fail);
+		}
 		return jsonObject.toString();
 	}
 }

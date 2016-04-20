@@ -9,4 +9,6 @@ public interface UserService {
 	public long getUserAnimateIdByPhonenum(String phonenum);
 	
 	public boolean verifyUserAccessLegal(long userAnimateId,String access_token);
+	
+	public String getUserInfo(long userAnimateId);
 }
