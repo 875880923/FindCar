@@ -57,6 +57,7 @@ public class UserAccessInterceptor extends HandlerInterceptorAdapter {
 			log.error("拦截器异常：",e);
 			return false;
 		}
+		
         return true;
     }
 }

@@ -79,16 +79,18 @@ public class DriverOrderController {
 	@DriverAccessRequired
 	public String getUserInfo(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
 		JSONObject jsonObject = new JSONObject();
-		log.info("司机查询订单用户信息 phonenum:"+phonenum+" order_id"+orderId);
+		log.info("司机查询订单用户信息 phonenum:"+phonenum+" order_id:"+orderId);
 		long driverAnimateId = driverService.getDriverAnimateIdByPhonenum(phonenum);
 		if(driverAnimateId==-1){
 			//用户不存在
 			jsonObject.put("result", ResultText.no_driver);
+			log.info("司机不存在 phonenum:"+phonenum);
 			return jsonObject.toString();
 		}
 		long userAnimateId = orderService.getOrderUserIdByOrderId(orderId, driverAnimateId);
 		if(userAnimateId==-1){
 			jsonObject.put("result", ResultText.fail);
+			log.info("获取不到订单用户ID orderId："+orderId);
 			return jsonObject.toString();
 		}
 		String userInfo = userService.getUserInfo(userAnimateId);

@@ -218,7 +218,7 @@ public class OrderServiceImpl implements OrderService {
 		try{
 			OrderRecord record =orderMapper.selectByPrimaryKey(orderId);
 			if(null != record){
-				if(record.getUserAnimateId() !=null && record.getUserAnimateId()== driverAnimateId){
+				if(record.getUserAnimateId() !=null && record.getDriverAnimateId()== driverAnimateId){
 					user_animate_id = record.getUserAnimateId();
 				}
 			}
