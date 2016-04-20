@@ -171,7 +171,7 @@ public class OrderServiceImpl implements OrderService {
 		try{
 			OrderRecord record = orderMapper.selectByPrimaryKey(orderId);
 			if(record!=null){
-				if(record.getDriverAnimateId() == 0){
+				if(null == record.getDriverAnimateId() || record.getDriverAnimateId() ==0){
 					record.setOrderStatus(OrderText.driver_accept);
 					record.setDriverAnimateId(driverAnimateId);
 					orderMapper.updateByPrimaryKey(record);
