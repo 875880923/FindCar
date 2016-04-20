@@ -1,5 +1,6 @@
 package com.lantian.FindCar.controller;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -96,6 +97,7 @@ public class DriverOrderController {
 		}else{
 			jsonObject.put("result", ResultText.fail);
 		}
+		log.info("获取订单用户信息 phonenum:"+phonenum+" resutlt:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 }
