@@ -74,7 +74,7 @@ public class DriverOrderController {
 		return jsonObject.toString();
 	}
 	
-	@RequestMapping(value="/driver/getUserInfo")
+	@RequestMapping(value="/driver/getUserInfo",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	@DriverAccessRequired
 	public String getUserInfo(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
