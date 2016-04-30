@@ -15,6 +15,7 @@ import com.lantian.FindCar.mapper.OrderRecordMapper;
 import com.lantian.FindCar.service.OrderService;
 import com.lantian.FindCar.text.OrderText;
 import com.lantian.FindCar.util.CommonUtil;
+import com.lantian.FindCar.util.RedisLockUtil;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -170,13 +171,21 @@ public class OrderServiceImpl implements OrderService {
 		boolean result = false;
 		try{
 			OrderRecord record = orderMapper.selectByPrimaryKey(orderId);
-			if(record!=null){
-				if(null == record.getDriverAnimateId() || record.getDriverAnimateId() ==0){
-					record.setOrderStatus(OrderText.driver_accept);
-					record.setDriverAnimateId(driverAnimateId);
-					orderMapper.updateByPrimaryKey(record);
-					result = true;
+			if(record!=null&&OrderText.user_created.equals(record.getOrderStatus())){
+				//获取分布式锁
+				RedisLockUtil lock = new RedisLockUtil("lock:order-"+orderId);
+				if(lock.lock()){
+					record = orderMapper.selectByPrimaryKey(orderId);
+					if(record!=null&&OrderText.user_created.equals(record.getOrderStatus())){
+						record.setOrderStatus(OrderText.driver_accept);
+						record.setDriverAnimateId(driverAnimateId);
+						orderMapper.updateByPrimaryKey(record);
+						result = true;
+					}
+					//解除锁
+					lock.unlock();
 				}
+				
 			}
 		}catch(Exception e){
 			log.error("完成订单失败：",e);

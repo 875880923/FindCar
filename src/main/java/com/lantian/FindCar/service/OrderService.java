@@ -23,6 +23,10 @@ public interface OrderService {
 	
 	
 	//司机端接口
+	
+	/*
+	 * 司机抢单
+	 */
 	public boolean agreeOrderByOrderId(long orderId,long driverAnimateId);
 	
 	public List<String> getAvailableOrder();
