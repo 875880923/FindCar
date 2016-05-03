@@ -154,7 +154,11 @@ public class OrderServiceImpl implements OrderService {
 					orderJson.put("driver_animate_id", order.getDriverAnimateId());
 					orderJson.put("order_status", order.getOrderStatus());
 					orderJson.put("start_name", order.getStartLocationName());
+					orderJson.put("start_lat", order.getStartLocationLat());
+					orderJson.put("start_lng", order.getStartLocationLng());
 					orderJson.put("end_name", order.getEndLocationName());
+					orderJson.put("end_lat", order.getEndLocationLat());
+					orderJson.put("end_lng", order.getEndLocationLng());
 					orderJson.put("car_cate", order.getCarCate());
 					orderJson.put("create_time", order.getCreateTime());
 					list.add(orderJson.toString());
