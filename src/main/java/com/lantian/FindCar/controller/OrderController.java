@@ -112,6 +112,29 @@ public class OrderController {
 		return jsonObject.toString();
 	}
 	
+	@RequestMapping(value="/getOrderStatus")
+	@ResponseBody
+	@AccessRequired
+	public String getOrderStatus(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
+		JSONObject jsonObject = new JSONObject();
+		long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
+		if(userAnimateId==-1){
+			//用户不存在
+			jsonObject.put("result", ResultText.no_user);
+			return jsonObject.toString();
+		}
+		String orderStatus = orderService.getOrderStatusByOrderId(orderId,userAnimateId);
+		
+		if(!CommonUtil.isEmpty(orderStatus)){
+			jsonObject.put("order_status", orderStatus);
+			jsonObject.put("result", ResultText.success);
+		}else{
+			jsonObject.put("result", ResultText.fail);
+		}
+		log.info("查询订单状态：phonenum:"+phonenum+" order_id:"+orderId+"  data:"+jsonObject.toString());
+		return jsonObject.toString();
+	}
+	
 	@RequestMapping(value="/cancelOrder")
 	@ResponseBody
 	@AccessRequired
