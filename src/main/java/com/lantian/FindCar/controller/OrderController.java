@@ -112,7 +112,7 @@ public class OrderController {
 		return jsonObject.toString();
 	}
 	
-	@RequestMapping(value="/getOrderStatus")
+	@RequestMapping(value="/getOrderStatus",produces="text/html;charset=UTF-8")
 	@ResponseBody
 	@AccessRequired
 	public String getOrderStatus(@RequestParam("order_id")long orderId,@RequestParam("phonenum") String phonenum){
