@@ -9,4 +9,6 @@ public interface DriverService {
 	public long getDriverAnimateIdByPhonenum(String phonenum);
 	
 	public boolean verifyDriverAccessLegal(long driverAnimateId,String access_token);
+	
+	public String getDriverInfo(long driverAnimateId);
 }

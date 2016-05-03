@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.annotation.AccessRequired;
+import com.lantian.FindCar.service.DriverService;
 import com.lantian.FindCar.service.OrderService;
 import com.lantian.FindCar.service.UserService;
 import com.lantian.FindCar.text.OrderText;
@@ -27,6 +28,8 @@ public class OrderController {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DriverService driverService;
 	
 	@RequestMapping(value="/placeOrder")
 	@ResponseBody
@@ -109,6 +112,28 @@ public class OrderController {
 			jsonObject.put("result", ResultText.fail);
 		}
 		log.info("查询订单司机ID：phonenum:"+phonenum+" order_id:"+orderId+"  data:"+jsonObject.toString());
+		return jsonObject.toString();
+	}
+	
+	@RequestMapping(value="/getDriverInfo",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	@AccessRequired
+	public String getDriverInfo(@RequestParam("driver_animate_id")long driverAnimateId,@RequestParam("phonenum") String phonenum){
+		JSONObject jsonObject = new JSONObject();
+		long userAnimateId = userService.getUserAnimateIdByPhonenum(phonenum);
+		if(userAnimateId==-1){
+			//用户不存在
+			jsonObject.put("result", ResultText.no_user);
+			return jsonObject.toString();
+		}
+		String driverInfo = driverService.getDriverInfo(driverAnimateId);
+		if(CommonUtil.isNotEmpty(driverInfo)){
+			jsonObject.put("driver_info", driverInfo);
+			jsonObject.put("result", ResultText.success);
+		}else{
+			jsonObject.put("result", ResultText.fail);
+		}
+		log.info("查询司机信息：phonenum:"+phonenum+" driver_animate_id:"+driverAnimateId+"  data:"+jsonObject.toString());
 		return jsonObject.toString();
 	}
 	

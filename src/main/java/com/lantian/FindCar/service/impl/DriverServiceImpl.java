@@ -7,10 +7,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lantian.FindCar.dao.DriverAnimateInformation;
 import com.lantian.FindCar.dao.DriverAnimateInformationExample;
 import com.lantian.FindCar.dao.DriverBaseInformation;
 import com.lantian.FindCar.dao.DriverBaseInformationExample;
+import com.lantian.FindCar.dao.UserAnimateInformation;
+import com.lantian.FindCar.dao.UserBaseInformation;
 import com.lantian.FindCar.mapper.DriverAnimateInformationMapper;
 import com.lantian.FindCar.mapper.DriverBaseInformationMapper;
 import com.lantian.FindCar.service.DriverService;
@@ -115,6 +118,21 @@ public class DriverServiceImpl implements DriverService {
 			log.error("验证司机access Legal失败：",e);
 		}
 		return isLegal;
+	}
+
+	public String getDriverInfo(long driverAnimateId) {
+		JSONObject userInfoJson = new JSONObject();
+		try{
+			DriverAnimateInformation entity = driverAnimateMapper.selectByPrimaryKey(driverAnimateId);
+			if(entity!=null){
+				DriverBaseInformation baseEntity = driverBaseMapper.selectByPrimaryKey(entity.getDriverBaseId());
+				userInfoJson.put("driver_phonenum", baseEntity.getPhonenum());
+				userInfoJson.put("driver_name", baseEntity.getName());
+			}
+		}catch(Exception e){
+			log.error("获取司机信息失败:",e);
+		}
+		return userInfoJson.toString();
 	}
 
 
