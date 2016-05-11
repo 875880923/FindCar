@@ -121,7 +121,13 @@
    			<artifactId>redisson</artifactId>
    			<version>2.2.11</version>
 		</dependency>
-
+	
+		<!-- fileupload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
